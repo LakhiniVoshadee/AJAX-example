@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX Example</title>
+</head>
+<body>
+<h1>This is a example project for AJAX</h1>
+<p id="para">
+    sample paragraph sample paragraph sample paragraph sample paragraph sample paragraph sample paragraph sample
+    paragraph sample paragraph sample paragraph sample paragraph sample paragraph sample paragraph sample paragraph
+    sample paragraph sample paragraph
+</p>
+<button id="ajax-btn">Send A Ajax Request</button>
+<button id="db-btn">DB Button</button>
+<button id="image-btn">Image</button>
+<img id="dynamic-image">
+
+
+<script src="js/code.jquery.com_jquery-3.7.1.min.js"></script>
+<script>
+    $('#ajax-btn').click(function () {
+        console.log("Request Started!")
+
+        $.ajax({
+            async:false,
+            url:"db/db.txt",
+            success:function (response){
+                console.log(response)
+            },
+            error:function (error){
+                console.log('error')
+                console.log(error)
+            }
+        })
+        console.log("Requested Finished!")
+        // var http = new XMLHttpRequest();
+
+        //fix the open state issue
+        // http.open('GET', 'index.html');
+        // http.send();
+
+    })
+
+    $('#db-btn').click(function () {
+        console.log("Request Started!")
+        var http = new XMLHttpRequest();
+        console.log(http.readyState, "After the XMLHttpRequest Object is created")
+
+        //fix the open state issue
+        http.open('GET', 'db/db.txt',false);
+        console.log(http.readyState, "After the open method is invoked")
+        console.log(http.responseText);
+        console.log(http.readyState, "After the ResponseText is read")
+        http.send();
+        console.log(http.readyState, "After the send method is invoked")
+        http.onreadystatechange = function () {
+            console.log(http.readyState, "Inside on ready state change event")
+            console.log(http.responseText);
+            if (http.readyState == 4 && http.status == 200) {
+
+                console.log(http.responseText);
+                $('#para').text(http.responseText);
+
+
+            }
+            console.log(http.readyState);
+            console.log(http.status);
+            console.log(http.responseText);
+
+        }
+
+        console.log("Request Finished!")
+
+
+    })
+
+
+    //convert to synchronys
+
+   /* $('#db-btn').click(function () {
+        console.log("Request Started!");
+        var http = new XMLHttpRequest();
+        console.log(http.readyState, "After the XMLHttpRequest Object is created");
+
+
+        console.log(http.readyState, "After the open method is invoked");
+
+        console.log(http.responseText);
+        console.log(http.readyState, "After the ResponseText is read");
+        http.send(); // Send the request
+        console.log(http.readyState, "After the send method is invoked");
+
+
+        if (http.readyState == 4 && http.status == 200) {
+            console.log(http.responseText);
+            $('#para').text(http.responseText);
+        }
+
+        console.log(http.readyState);
+        console.log(http.status);
+        console.log(http.responseText);
+
+        console.log("Request Finished!");
+    });*/
+
+
+    $('#image-btn').click(function () {
+        console.log("Request Started!")
+        var http = new XMLHttpRequest();
+        console.log(http.readyState, "After the XMLHttpRequest Object is created")
+        http.open('GET', 'assets/image.jpg');
+
+
+        console.log(http.readyState, "After the open method is invoked")
+        console.log(http.responseText);
+        console.log(http.readyState, "After the ResponseText is read")
+
+        console.log(http.readyState, "After the send method is invoked")
+        http.onreadystatechange = function () {
+            console.log(http.readyState, "Inside on ready state change event")
+            console.log(http.responseText);
+            if (http.readyState == 4 && http.status == 200) {
+
+                console.log(http.responseText);
+                //    $('#para').text(http.responseText);
+                http.open('GET', 'assets/image.jpg');
+                http.send();
+
+                $('#dynamic-image').attr('src', 'assets/image.jpg');
+
+
+            }
+            console.log(http.readyState);
+            console.log(http.status);
+            console.log(http.responseText);
+
+        }
+        console.log("Request Finished!")
+
+    })
+</script>
+
+<script>
+    //synchronous
+  /*  console.log("1")
+    console.log("2")
+    console.log("3")
+*/
+    //asynchronous
+   /* console.log("start")
+
+    setTimeout(()=> {
+        console.log("middle")
+
+    },2000)
+
+    setTimeout(()=> {
+        console.log("middle-2")
+
+    },1000)
+    console.log("end")*/
+</script>
+</body>
+</html>
